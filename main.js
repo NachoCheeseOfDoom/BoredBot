@@ -48,15 +48,22 @@ const generateActivityBtn = document.getElementById('generate-btn');
 
 generateActivityBtn.addEventListener("click", () => {
     generateActivity()
+
 });
 
 function generateActivity() {
     fetch("https://apis.scrimba.com/bored/api/activity")
         .then(res => res.json())
         .then(data => {
-            const activityContainer = document.getElementById('container');
-            activityContainer.innerHTML = `
-            <h3>${data.activity}</h3>
-        `
+            // const activityContainer = document.getElementById('container');
+            const list = document.getElementById('ul-list');
+            let li = document.createElement('li');
+            li.innerHTML = `<p style="font-weight: bold;">${data.activity}</p>`
+            list.appendChild(li)
+
+            if (list.childElementCount >= 3) {
+                generateActivityBtn.disabled = true
+                generateActivityBtn.style.backgroundColor = "rgba(80, 80, 80, 0.722)"
+            }
         })
 }
